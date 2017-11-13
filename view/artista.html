@@ -1,0 +1,15 @@
+<div class="jumbotron">
+
+    <img class="img-thumbnail" ng-src={{artista.imagem}}>
+    <h3 class="center">{{artista.nome}}</h3>  
+    </hr>
+    </hr>
+    <input class="form-control" type="text" ng-model="artista.nota" placeholder="Atribuir nota ao Artista" />
+    <select class="form-control"  ng-model="artista.ultimaMusica" ng-options="musica.nome for musica in artista.musicas">
+        <option value="">Informar a última música ouvida do artista</option>
+    </select>
+    <a href="/adicionarArtista" class="btn btn-primary btn-block" ng-click="salvar(artista)">Salvar</a>
+    <button class="btn btn-primary btn-block" ng-click="adicionarAosFavoritos(artista)">Informações sobre o Artista</button>
+
+
+</div>

@@ -1,0 +1,24 @@
+<div class="jumbotron">
+    <h3 class="center">Músicas da Playlist</h3>
+    <h3 class="center">{{playlist.nome}}</h3>
+    </hr>
+    <table class="table table-stripped">
+        <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Artista</th>
+
+        </tr>
+        <tr ng-class="{selecionada: musica.selecionada}" ng-repeat="musica in playlist.musicas">
+            <td>
+                <input type="checkbox" ng-model="musica.selecionada">
+            </td>
+            <td>{{musica.nome}}</td>
+            <td>{{musica.artista}}</td>
+        </tr>
+    </table>
+    <select class="btn btn-primary btn-block" ng-model="musica" ng-options="musica.nome for musica in musicas">
+        Adicionar nova Música
+    </select>
+    <button class="btn btn-outline-primary btn-block" ng-click="adicionaMusicaAPlaylist(musica)">Salvar Música</button>
+</div>

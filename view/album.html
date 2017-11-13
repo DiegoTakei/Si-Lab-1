@@ -1,0 +1,22 @@
+<div class="jumbotron">
+    <h3 class="center">Músicas do Álbum</h3>
+    <h3 class="center">{{album.nome}}</h3>
+    </hr>
+    <table class="table table-stripped">
+        <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Artista</th>
+
+        </tr>
+        <tr ng-class="{selecionada: musica.selecionada}" ng-repeat="musica in album.album">
+            <td>
+                <input type="checkbox" ng-model="musica.selecionada">
+            </td>
+            <td>{{musica.nome}}</td>
+            <td>{{musica.artista}}</td>
+        </tr>
+    </table>
+    <a href="/adicionarMusica" class="btn btn-primary btn-block">Adicionar Música</a>
+    <button class="btn btn-danger btn-block" ng-click="removerMusica(musicas)" ng-show="isMusicaSelecionada(musicas)"> Remover Artista</button>
+</div>

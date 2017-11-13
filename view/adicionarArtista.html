@@ -1,0 +1,29 @@
+<div class="jumbotron">
+    <h3 class="center">{{app}}</h3>
+    <input type="text" class="form-control" ng-model="criterioDeBusca" placeholder="Pesquisar artista">
+    <table ng-show="artistas.length > 0" class="table">
+        <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Nota do Artista</th>
+            <th>Última música ouvida</th>
+        </tr>
+        <tr ng-class="{selecionado: artista.selecionado}" ng-repeat="artista in artistas | filter:{nome:criterioDeBusca}">
+            <td>
+                <input type="checkbox" ng-model="artista.selecionado">
+            </td>
+            <td><a href="/artista" ng-click="getInfoArtista(artista)"> {{artista.nome}}</td>
+            <td><img class="img-thumbnail" ng-src={{artista.imagem}}></img></td>
+            <td>{{artista.nota}}</td>
+            <td>{{artista.ultimaMusica.nome}}</td>
+        </tr>
+    </table>
+    <hr/>
+    
+    <input class="form-control" type="text" ng-model="artista.nome" placeholder="Nome"/>
+    <input class="form-control" type="text" ng-model="artista.imagem" placeholder="Imagem"/>
+    <button class="btn btn-outline-primary btn-block" ng-click="adicionarArtista(artista)" ng-disabled="!artista.nome"> Adicionar Artista</button>
+    <button class="btn btn-outline-primary btn-block" ng-click="adicionarAosFavoritos(artista)" ng-show="isArtistaSelecionado(artistas)"> Adicionar aos Favoritos</button>
+    <button class="btn btn-outline-danger btn-block" ng-click="removerArtista(artistas)" ng-show="isArtistaSelecionado(artistas)"> Remover Artista</button>
+</div>
