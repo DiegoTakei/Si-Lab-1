@@ -13,20 +13,20 @@
                 <td>
                     <input type="checkbox" ng-model="musica.selecionado">
                 </td>
-                <td><a href="/album" ng-click="getInfoAlbum(album)">{{album.nomeAlbum}}</td>
-                <td>{{album.album[0].artista}}</td>
+                <td><a href="/album" ng-click="getInfoAlbum(album)">{{album.name}}</td>
+                <td>{{album.artist.name}}</td>
             </tr>
         </table>
     </div>
     <hr/>
-    <input class="form-control" type="text" ng-model="musica.nome" placeholder="Nome" />
-    <input class="form-control" type="text" ng-model="musica.artista" placeholder="Artista" />
-    <input class="form-control" type="text" ng-model="musica.album" placeholder="Álbum" />
-    <input class="form-control" type="text" ng-model="musica.ano" placeholder="Ano de Lançamento" />
-    <input class="form-control" type="text" ng-model="musica.duracao" placeholder="Duração" />
+    <input class="form-control" type="text" ng-model="musica.name" placeholder="Nome" />
+    <input class="form-control" type="text" ng-model="album.artist.name" placeholder="Artista" />
+    <input class="form-control" type="text" ng-model="album.name" placeholder="Álbum" />
+    <input class="form-control" type="text" ng-model="musica.year" placeholder="Ano de Lançamento" />
+    <input class="form-control" type="text" ng-model="musica.duration" placeholder="Duração" />
     
 
-    <button class="btn btn-primary btn-block" ng-click="adicionarMusica(musica)" ng-disabled="!musica.nome || !musica.artista || !musica.album 
-    || !musica.ano || !musica.duracao">Adicionar Música</button>
+    <button class="btn btn-primary btn-block" ng-click="adicionarMusica(musica,album)" ng-disabled="!musica.name || !album.artist.name || !album.name 
+    || !musica.year || !musica.duration">Adicionar Música</button>
     <button class="btn btn-danger btn-block" ng-click="removerMusica(musicas)" ng-show="isMusicaSelecionado(musicas)"> Remover Artista</button>
 </div>

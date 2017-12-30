@@ -1,1 +1,1 @@
-angular.module("mySpotify", ["ngRoute"]);
+angular.module("mySpotify", ["ngRoute","ngCookies"]);

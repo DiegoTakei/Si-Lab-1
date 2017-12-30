@@ -6,8 +6,8 @@ var app = angular.module("mySpotify").config(function ($routeProvider, $location
         templateUrl: 'view/adicionarArtista.html',
         controller: "artistasController"
     });
-    $routeProvider.when('/index.html', {
-        templateUrl: 'view/menu.html'
+    $routeProvider.when("/menu",{
+        templateUrl: "view/menu.html"
     });
     $routeProvider.when("/adicionarMusica",{
         templateUrl: "view/adicionarMusica.html",
@@ -33,4 +33,16 @@ var app = angular.module("mySpotify").config(function ($routeProvider, $location
         templateUrl: "view/album.html",
         controller: "musicaController"
     });
+    $routeProvider.when("/registrar", {
+        templateUrl: "view/registrar.html",
+        controller: "loginController"
+    });
+    $routeProvider.when('/index.html', {
+        templateUrl: 'view/login.html',
+        controller: "loginController"
+    });
+    $routeProvider.when("/favoritos",{
+        templateUrl: "view/favoritos.html",
+        controller: "artistasController"
+    })
 });

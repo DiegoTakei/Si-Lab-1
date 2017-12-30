@@ -10,11 +10,11 @@
                 <td>
                     <input type="checkbox" ng-model="playlist.selecionada">
                 </td>
-                <td><a href="/playlist" ng-click="getInfoPlaylist(playlist)"> {{playlist.nomePlaylist}}</td>
+                <td><a href="/playlist" ng-click="getInfoPlaylist(playlist)"> {{playlist.name}}</td>
             </tr>
         </table>
     </div>
     <a class="btn btn-outline-primary btn-block" href="/criarPlaylist" ui-sref-active="active">Criar nova PlayList</a>
-    <button class="btn btn-outline-danger btn-block" ng-click="removerPlaylist(playlists)" ng-show="isPlaylistSelecionada(playlists)">
+    <button class="btn btn-outline-danger btn-block" ng-click="removerPlaylist(playlists)">
         Remover Playlist</button>
 </div>

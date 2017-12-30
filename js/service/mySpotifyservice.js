@@ -1,76 +1,135 @@
-angular.module('mySpotify').service('myService', function () {
-    var _artistas = [];
+angular.module('mySpotify').service('myService', function ($http, $location, userService) {
     var _albuns = [];
     var _musicas = [];
     var _playlists = [];
-    var _artista;
     var _playlist;
     var _album;
+    var _artista;
     var _favoritos = [];
 
     var _adicionarArtista = function (artista) {
 
-        if(!_existsArtista(artista.nome)) {
-            _artistas.push(angular.copy(artista));
-        }else{
-            alert("Artista já existe!");
-        }
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/artist/add',
+                headers: {username: userService.getToken()},
+                data: artista})
     }
     var _adicionarMusica = function (musica) {
-        var album = [];
-        var existsAlbum = false;
-        for (var i = 0; i < _albuns.length; i++) {
-            if (_albuns[i].nomeAlbum === musica.album) {
-
-                if (!_existsMusic(_albuns[i], musica)) {
-                    _albuns[i].album.push(angular.copy(musica));
-                    existsAlbum = true;
-                } else {
-                    alert("Música já Existe");
-                    return;
-                }
-            }
-        }
-        if (existsAlbum == false) {
-            album.push(angular.copy(musica));
-            _adicionarAlbum(album, musica.album);
-        }
-        _musicas.push(angular.copy(musica));
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/album/add',
+                headers: { username: userService.getToken() },
+                data: musica
+        })
     }
     var _adicionarAlbum = function (album,nomeAlbum) {
 
         _albuns.push(angular.copy({ nomeAlbum: nomeAlbum, album }));
     }
-    var _adicionarPlaylist = function (musicas,nome) {
-
-        if (!_existsPlaylist(nome)){
-            _playlists.push(angular.copy({ nomePlaylist: nome, musicas}));
-        }else{
-            alert("Playlist já existente!");
-        }
+    var _adicionarPlaylist = function (playlist) {    
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/playlists/addPlaylist',
+                headers: { username: userService.getToken() },
+                data: playlist
+            }
+        )
     }
 
     var _removerArtista = function (artistas) {
-
-        _artistas = artistas;   
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/artist/remove',
+                headers: { username: userService.getToken() },
+                data: artistas
+            })
+        
     }
+
+    var _atualizarArtista = function (artista,name) {
+        $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/artist/updateArtist',
+                headers: { username: userService.getToken(), name:name },
+                data: artista
+            })      
+    }
+
+    var _favoritar = function (artista) {
+        $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/artist/favorite',
+                headers: { username: userService.getToken()},
+                data: artista
+            })
+    }
+
+    var _addMusicPlaylist = function (musica,namePlaylist) {
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/playlists/addMusic',
+                headers: { username: userService.getToken(), name:namePlaylist },
+                data: musica
+            })     
+    }
+
+    var _getA = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/artist/getAll',
+                headers: { username: userService.getToken() }
+            })
+        
+    }
+    var _getAlbuns = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/album/getAll',
+                headers: { username: userService.getToken() }
+        })
+
+    }
+    var _getMusicas = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/album/getAllMusics',
+                headers: { username: userService.getToken() }
+            })
+    }
+    var _getPlaylists = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/playlists/getAll',
+                headers: { username: userService.getToken() }
+            })
+    }    
     var _removerPlaylist = function (playlists) {
 
-        _playlists = playlists;
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/playlists/remove',
+                headers: { username: userService.getToken() },
+                data: playlists
+            })
     }
 
     var _existsMusic = function (musicas, musica) {
         console.log(musicas.album);
         for (var i = 0; i < musicas.album.length; i++) {
             if (musicas.album[i].nome == musica.nome) {
-                return true;
-            }
-        }
-        return false;
-    }
-    var _existsArtista = function (nome) {
-        for (var i = 0; i < _artistas.length; i++) {
-            if (_artistas[i].nome == nome) {
                 return true;
             }
         }
@@ -84,45 +143,59 @@ angular.module('mySpotify').service('myService', function () {
         }
         return false;
     }
-
-    var _adicionarMusicaAPlaylist = function (musica,playlist) {
-        
-        for (var i = 0; i < _playlists.length; i++) {
-            if (_playlists[i].nomePlaylist == playlist.nomePlaylist) {
-               _playlists[i].musicas.push(angular.copy(musica));
-              // _playlist.musicas.push(angular.copy(musica));
-            }
-        }
-
-    }
-    var _adicionarAosFavoritos = function (artista) {
-        
-       _favoritos.push(angular.copy(artista));
-       console.log(_favoritos);
+    
+    var _getFavoritos = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/artist/getAllFavorite',
+                headers: { username: userService.getToken() }
+            })
     }
 
-    var _getArtistaMusicas = function (nomeArtista) {
-        var musicas = [];
-        for (var i = 0; i < _musicas.length; i++) {
-            if (_musicas[i].artista === nomeArtista) {
-                musicas.push(_musicas[i]);
-            }
-        } 
-        return musicas; 
+    var _getArtistaMusicas = function (artista) {
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/artist/getAllArtistMusics',
+                headers: { username: userService.getToken() },
+                data: artista
+            })     
+    }
+
+    var _setValues = function (response) {
         
+        _artistas = response.data.artistSet;
     }
 
     var _getArtistas = function () {
-        return _artistas;
-    }
-    var _getArtista = function () {
-        return _artista;
+        return [];
     }
     var _getPlaylist = function () {
         return _playlist;
     }
-    var _getAlbum= function () {
+    var _getAlbumMusicas = function () {
+        return $http(
+            {
+                method: 'POST',
+                url: 'http://localhost:8080/album/getAlbum',
+                headers: { username: userService.getToken() },
+                data: _album
+            })   
+    }
+    var _getLastMusics = function () {
+        return $http(
+            {
+                method: 'GET',
+                url: 'http://localhost:8080/album/getLastMusics',
+                headers: { username: userService.getToken() }
+            })
+    }
+    var _getAlbum = function () {
         return _album;
+    }
+    var _getArtista = function () {
+        return _artista;
     }
     var _setArtista = function (artista) {
         _artista = artista;
@@ -133,36 +206,33 @@ angular.module('mySpotify').service('myService', function () {
     var _setAlbum = function (album) {
         _album = album;
     }
-    var _getAlbuns = function () {
-        return _albuns;
-    }
-    var _getMusicas = function () {
-        return _musicas;
-    }
-    var _getPlaylists = function () {
-        return _playlists;
-    }
 
     return {
         adicionarArtista: _adicionarArtista,
         adicionarMusica: _adicionarMusica,
         adicionarPlaylist: _adicionarPlaylist,
+        addMusicPlaylist: _addMusicPlaylist,
+        atualizarArtista: _atualizarArtista,
+        favoritar: _favoritar,
         removerArtista: _removerArtista,
         removerPlaylist: _removerPlaylist,
-        adicionarAosFavoritos: _adicionarAosFavoritos,
-        adicionarMusicaAPlaylist: _adicionarMusicaAPlaylist,
         getArtistas: _getArtistas,
-        getAlbuns: _getAlbuns,
         getMusicas: _getMusicas,
         getPlaylists: _getPlaylists,
-        getArtista: _getArtista,
         getPlaylist: _getPlaylist,
         getAlbum: _getAlbum,
         setAlbum: _setAlbum,
         setPlaylist: _setPlaylist,
         getArtistaMusicas: _getArtistaMusicas,
         setArtista: _setArtista,
-        existsMusic: _existsMusic
+        existsMusic: _existsMusic,
+        setValues: _setValues,
+        getA: _getA,
+        getAlbuns: _getAlbuns,
+        getFavoritos: _getFavoritos,
+        getLastMusics: _getLastMusics,
+        getAlbumMusicas: _getAlbumMusicas,
+        getArtista: _getArtista
     };
 
 });
